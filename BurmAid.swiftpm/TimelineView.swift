@@ -92,7 +92,7 @@ struct TimelineView: View{
                 .foregroundStyle(.yellow)
                 .offset(x: CGFloat(offset),y: -261)
                 .onAppear(){
-                    withAnimation(.easeOut(duration: 3)){
+                    withAnimation(.easeOut(duration: 5)){
                         offset -= 275
                         
                     }completion: {
@@ -133,33 +133,23 @@ struct TimelineView: View{
                     offset -= 275
                 }
             }
-            NavigationStack{
-                NavigationLink("Enter"){
-                    switch progress{
-                    case 0:
-                        IntroductionView()
-                    case 1:
-                        ConsonantsView()
-                    case 2:
-                        SemiConsonantView()
-                    case 3:
-                        TonesView()
-                    case 4:
-                        SimpleVowelView()
-                    default:
-                        IntroductionView()
-                    }
-                    
+            .navigationDestination(isPresented: Binding(get: {!isAnimating}, set: {newValue in
+                isAnimating = !newValue
+            })){
+                switch progress{
+                case 0:
+                    IntroductionView()
+                case 1:
+                    ConsonantsView()
+                case 2:
+                    SemiConsonantView()
+                case 3:
+                    TonesView()
+                case 4:
+                    SimpleVowelView()
+                default:
+                    IntroductionView()
                 }
-            }
-            .offset(x: -5,y: -50)
-            .opacity(isAnimating ? 0 : 1)
-            .font(.largeTitle)
-            .foregroundStyle(.green)
-            .fontDesign(.rounded)
-            .bold()
-            .onTapGesture {
-                print(progress)
             }
         }
         .offset(y: 200)

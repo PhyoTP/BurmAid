@@ -37,12 +37,13 @@ struct IntroductionView: View{
                     Text("Burmese words can have 3 components:")
                     Text("In လှူ (hluu):")
                         .bold()
-                    Text("Consonant: လ (l)")
-                        .foregroundStyle(.yellow)
-                    Text("Semi-consonant: ှ (h-)")
-                        .foregroundStyle(.green)
-                    Text("Vowel: ူ (uu)")
-                        .foregroundStyle(.red)
+                    HStack{
+                        Spacer()
+                        Image("detail")
+                            .resizable()
+                            .scaledToFit()
+                        Spacer()
+                    }
                     if !userData.isDone{
                         NavigationLink("Next"){
                             TimelineView(progress: 1)

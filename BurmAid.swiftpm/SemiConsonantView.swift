@@ -32,7 +32,7 @@ struct SemiConsonantView: View{
                 }
                 if !userData.isDone{
                     NavigationLink("Next"){
-                        TimelineView(progress: 3)
+                        QuizView(selection: 3)
                     }
                     .foregroundStyle(.blue)
                 }

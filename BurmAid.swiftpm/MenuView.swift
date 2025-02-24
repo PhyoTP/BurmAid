@@ -25,10 +25,16 @@ struct MenuView: View{
                     NavigationLink("Consonants"){
                         QuizView(selection: 2)
                     }
+                    NavigationLink("Semi-consonants"){
+                        QuizView(selection: 3)
+                    }
                 }
                 Section("About"){
                     NavigationLink("Introduction"){
                         IntroductionView()
+                    }
+                    NavigationLink("Settings"){
+                        SettingsView()
                     }
                 }
             }

@@ -24,28 +24,37 @@ struct ConsonantVowelView: View{
                     Text("For example, ကင် can have 3 tones, ကင်(kin), ကင့်(kin(short)), ကင်း(kinn), while ကက်(keh.) has no tone.")
                     Text("Words without tone are similar to the short tone except it is more pronounced.")
                     //Text("I will be using the glottal stop ʔ to represent the strong tone.")
-                    Text("Here are the consonant vowels:")
                 }
                 
-                
-                    
-                ForEach(consonantVowels){vowel in
-                    Section(vowel.vowels.joined(separator: ", ")){
-                        if vowel.isStrong{
-                            Text("No tone")
-                        }else{
-                            Text("Normal tones")
-                        }
-                            ForEach(Array(vowel.pronounciations.keys), id: \.self){key in
-                                HStack{
-                                    Text(key+vowel.vowels.joined(separator: "/ "+key))
-                                    Spacer()
-                                    Text((vowel.pronounciations[key] ?? ""))
+                Section("Consonant Vowels"){
+                    HStack {
+                        ForEach(consonantVowels){vowel in
+                            VStack(alignment: .center){
+                                Text(vowel.vowels.joined(separator: "/ "))
+                                    .bold()
+                                Divider()
+                                if vowel.isStrong{
+                                    Text("No tone")
+                                }else{
+                                    Text("Normal tones")
                                 }
+                                ForEach(Array(vowel.pronounciations.keys), id: \.self){key in
+                                    Divider()
+                                    HStack{
+                                        Text(key+vowel.vowels.joined(separator: "/ "+key))
+                                        Spacer()
+                                        Text((vowel.pronounciations[key] ?? ""))
+                                    }
+                                }
+                                Spacer()
                             }
-                        
+                            .frame(width: 125, height: 300)
+                            .padding()
+                            .background(.blue)
+                            .mask(RoundedRectangle(cornerRadius: 10))
+                            .opacity(0.8)
+                        }
                     }
-                    
                 }
                 Section("ည်"){
                     Text("ည် is a vowel with normal tones that can have different pronunciations based on the word, `ee`,`ay` or `eh`.")
