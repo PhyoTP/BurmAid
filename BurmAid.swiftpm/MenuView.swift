@@ -33,6 +33,9 @@ struct MenuView: View{
                     NavigationLink("Introduction"){
                         IntroductionView()
                     }
+                    NavigationLink("More about Myanmar"){
+                        MyanmarView()
+                    }
                     NavigationLink("Settings"){
                         SettingsView()
                     }

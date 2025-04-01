@@ -8,22 +8,16 @@ struct IntroductionView: View{
                 Text("This app will teach you how to read Burmese accurately.")
                 Section("About Myanmar"){
                     TabView{
-                        VStack{
-                            Image("Flag_of_Myanmar")
-                                .resizable()
-                                .scaledToFit()
-                            Text("The flag of Myanmar")
-                           // Text("By See File history below for details. - Government of Myanmar.Construction sheet., Public Domain, https://commons.wikimedia.org/w/index.php?curid=30801923")
-                                .font(.caption)
-                        }
-                        VStack{
-                            Image("Myanmar_(orthographic_projection)")
-                                .resizable()
-                                .scaledToFit()
-                            Text("A map of Myanmar")
-                         //   Text("By Valegos Mangenuit - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=90421408")
-                                .font(.caption)
-                        }
+                        PhotoView(image: "Flag_of_Myanmar", caption: "The flag of Myanmar")
+                       // By See File history below for details. - Government of Myanmar.Construction sheet., Public Domain, https://commons.wikimedia.org/w/index.php?curid=30801923
+                                
+                        PhotoView(image: "Myanmar_(orthographic_projection)", caption: "Myanmar on the world map")
+                        
+                         //   By Valegos Mangenuit - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=90421408
+                                
+                        PhotoView(image: "shwedagon", caption: "Shwedagon Pagoda, located at the heart of Yangon")
+                        // By Bjørn Christian Tørrissen - Own work by uploader, http://bjornfree.com/, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=56597526
+                        PhotoView(image: "bagan", caption: "The ancient city of Bagan")
                     }
                     .frame(height: 200)
                     .tabViewStyle(.page)
@@ -44,6 +38,7 @@ struct IntroductionView: View{
                             .scaledToFit()
                         Spacer()
                     }
+                    .frame(height: 200)
                     if !userData.isDone{
                         NavigationLink("Next"){
                             TimelineView(progress: 1)

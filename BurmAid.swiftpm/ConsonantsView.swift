@@ -21,6 +21,7 @@ struct ConsonantsView: View{
                                     if let url = Bundle.main.url(forResource: consonant.pronounciation + "a", withExtension: "m4a"){
                                         isPlaying = true
                                         audioPlayer = try AVAudioPlayer(contentsOf: url)
+                                        audioPlayer?.setVolume(10, fadeDuration: 0)
                                         audioPlayer?.play()
                                         time = 2
                                     }
