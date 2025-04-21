@@ -1,22 +1,18 @@
 import SwiftUI
 
 struct IntroductionView: View{
-    @EnvironmentObject var userData: UserData
+    @Environment(LessonManager.self) var lessonManager
     var body: some View{
         NavigationStack{
             List{
                 Text("This app will teach you how to read Burmese accurately.")
                 Section("About Myanmar"){
                     TabView{
-                        PhotoView(image: "Flag_of_Myanmar", caption: "The flag of Myanmar")
-                       // By See File history below for details. - Government of Myanmar.Construction sheet., Public Domain, https://commons.wikimedia.org/w/index.php?curid=30801923
+                        PhotoView(image: "Flag_of_Myanmar", caption: "The flag of Myanmar",copyright: "By See File history below for details. - Government of Myanmar.Construction sheet., Public Domain, https://commons.wikimedia.org/w/index.php?curid=30801923")
                                 
-                        PhotoView(image: "Myanmar_(orthographic_projection)", caption: "Myanmar on the world map")
-                        
-                         //   By Valegos Mangenuit - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=90421408
+                        PhotoView(image: "Myanmar_(orthographic_projection)", caption: "Myanmar on the world map",copyright:"By Valegos Mangenuit - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=90421408")
                                 
-                        PhotoView(image: "shwedagon", caption: "Shwedagon Pagoda, located at the heart of Yangon")
-                        // By Bjørn Christian Tørrissen - Own work by uploader, http://bjornfree.com/, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=56597526
+                        PhotoView(image: "shwedagon", caption: "Shwedagon Pagoda, located at the heart of Yangon",copyright: "By Bjørn Christian Tørrissen - Own work by uploader, http://bjornfree.com/, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=56597526")
                         PhotoView(image: "bagan", caption: "The ancient city of Bagan")
                     }
                     .frame(height: 200)
@@ -39,7 +35,7 @@ struct IntroductionView: View{
                         Spacer()
                     }
                     .frame(height: 200)
-                    if !userData.isDone{
+                    if !lessonManager.isDone(with: "Vowels"){
                         NavigationLink("Next"){
                             TimelineView(progress: 1)
                         }
@@ -53,5 +49,5 @@ struct IntroductionView: View{
 }
 #Preview{
     IntroductionView()
-        .environmentObject(UserData())
+        .environment(LessonManager())
 }

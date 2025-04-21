@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ConsonantVowelView: View{
     @State private var isTapped = false
-    @EnvironmentObject var userData: UserData
+    @Environment(LessonManager.self) var lessonManager
     var body: some View{
         NavigationStack{
             List{
@@ -27,32 +27,34 @@ struct ConsonantVowelView: View{
                 }
                 
                 Section("Consonant Vowels"){
-                    HStack {
-                        ForEach(consonantVowels){vowel in
-                            VStack(alignment: .center){
-                                Text(vowel.vowels.joined(separator: "/ "))
-                                    .bold()
-                                Divider()
-                                if vowel.isStrong{
-                                    Text("No tone")
-                                }else{
-                                    Text("Normal tones")
-                                }
-                                ForEach(Array(vowel.pronounciations.keys), id: \.self){key in
+                    ScrollView(.horizontal) {
+                        HStack{
+                            ForEach(consonantVowels){vowel in
+                                VStack(alignment: .center){
+                                    Text(vowel.vowels.joined(separator: "/ "))
+                                        .bold()
                                     Divider()
-                                    HStack{
-                                        Text(key+vowel.vowels.joined(separator: "/ "+key))
-                                        Spacer()
-                                        Text((vowel.pronounciations[key] ?? ""))
+                                    if vowel.isStrong{
+                                        Text("No tone")
+                                    }else{
+                                        Text("Normal tones")
                                     }
+                                    ForEach(Array(vowel.pronounciations.keys), id: \.self){key in
+                                        Divider()
+                                        HStack{
+                                            Text(key+vowel.vowels.joined(separator: "/ "+key))
+                                            Spacer()
+                                            Text((vowel.pronounciations[key] ?? ""))
+                                        }
+                                    }
+                                    Spacer()
                                 }
-                                Spacer()
+                                .frame(width: 125, height: 300)
+                                .padding()
+                                .background(.blue)
+                                .mask(RoundedRectangle(cornerRadius: 10))
+                                .opacity(0.8)
                             }
-                            .frame(width: 125, height: 300)
-                            .padding()
-                            .background(.blue)
-                            .mask(RoundedRectangle(cornerRadius: 10))
-                            .opacity(0.8)
                         }
                     }
                 }
@@ -69,7 +71,7 @@ struct ConsonantVowelView: View{
                     Text("ကမ္ဘာ(world) is read as ကမ်ဘာ(kanbah).")
                     Text("မန္တလေး(Mandalay State) is read as မန်တလေး(mantalayy).")
                 }
-                if !userData.isDone{
+                if !lessonManager.isDone(with: "Vowels"){
                     NavigationLink("Next"){
                         DoneView()
                     }
@@ -82,7 +84,7 @@ struct ConsonantVowelView: View{
 }
 #Preview{
     ConsonantVowelView()
-        .environmentObject(UserData())
+        .environment(LessonManager())
 }
 
 

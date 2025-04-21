@@ -6,7 +6,9 @@ struct TimelineView: View{
     var number = 245
     var spacing: CGFloat = 450
     @State var isAnimating = true
+    @Environment(LessonManager.self) var lessonManager
     var body: some View{
+        @Bindable var lessonManager = lessonManager
         ZStack{
             VStack{
                 HStack{//white parts
@@ -97,6 +99,17 @@ struct TimelineView: View{
                         
                     }completion: {
                         withAnimation(){
+                            switch progress{
+                            case 2:
+                                lessonManager.lessons.append(Lesson(name: "Consonants"))
+                            case 3:
+                                lessonManager.lessons.append(Lesson(name:"Semi-consonants"))
+                            case 4:
+                                lessonManager.lessons.append(Lesson(name:"Tones"))
+                            default:
+                                print("ok")
+                            
+                            }
                             isAnimating = false
                         }
                     }
@@ -157,5 +170,5 @@ struct TimelineView: View{
 }
 #Preview{
     TimelineView(progress: 4)
-        .environmentObject(UserData())
+        .environment(LessonManager())
 }

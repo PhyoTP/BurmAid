@@ -2,7 +2,7 @@ import SwiftUI
 import AVFoundation
 
 struct ConsonantsView: View{
-    @EnvironmentObject var userData: UserData
+    @Environment(LessonManager.self) var lessonManager
     @State private var isPlaying = false
     @State private var audioPlayer: AVAudioPlayer?
     @State private var time = 0
@@ -51,12 +51,12 @@ struct ConsonantsView: View{
                     Text("If a character has no inherent vowel, it is pronounced with a short `ah` sound.")
                     Text("For example, က is pronounced `ka`.")
                     //Text("ရ is sometimes pronounced `ra`.")
-                    if !userData.isDone{
-                        NavigationLink("Next"){
-                            QuizView(selection: 2)
-                        }
-                        .foregroundStyle(.blue)
+                    
+                    NavigationLink(lessonManager.isDone(with: "Vowels") ? "Practice" : "Next"){
+                        QuizView(selection: 2)
                     }
+                    .foregroundStyle(.blue)
+                    
                 }
                 .navigationTitle("Consonants")
             }
@@ -98,7 +98,7 @@ struct ConsonantsView: View{
 }
 #Preview{
     ConsonantsView()
-        .environmentObject(UserData())
+        .environment(LessonManager())
 }
 
 

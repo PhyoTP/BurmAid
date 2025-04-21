@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct MyanmarView : View{
+struct MyanmarView: View{
     var body: some View{
         NavigationStack{
             List{
@@ -25,17 +25,17 @@ struct MyanmarView : View{
                     Text("The Burmese New Year, more commonly known as Thingyan (သင်္ကြန် `thinchyan`), is celebrated in April annually. It is a water festival where people pour water onto other people to wash away the bad luck and is also very refreshing during the hot season.")
                 }
                 Section("Geography"){
-                    TabView{
+                 //   TabView{
                         
-                        PhotoView(image: "zwegabin", caption: "Me at Mount Zwegabin, a mountain in Kayin State")
-                        
-                        
-                        PhotoView(image: "Painite", caption: "Painite, regarded to be the rarest gem in the world")
-                            // By Rob Lavinsky, iRocks.com – CC-BY-SA-3.0, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=10168302
-                        
+                  //      PhotoView(image: "zwegabin", caption: "Me at Mount Zwegabin, a mountain in Kayin State")
+                    HStack{
+                        Spacer()
+                        PhotoView(image: "Painite", caption: "Painite, regarded to be the rarest gem in the world",copyright: "By Rob Lavinsky, iRocks.com – CC-BY-SA-3.0, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=10168302")
+                        Spacer()
                     }
-                    .tabViewStyle(.page)
-                    .frame(height: 200)
+                   // }
+                 //   .tabViewStyle(.page)
+                  //  .frame(height: 200)
                     Text("Myanmar has many high mountains, gem caves, beautiful beaches and breathtaking scenery.")
                     Text("The tallest mountain in Myanmar is Hkakabo Razi, located in the Kachin State.")
                     Text("Myanmar is the home of many jewels and gems, such as jade, ruby, and the world's rarest gem, painite.")
@@ -51,6 +51,7 @@ struct MyanmarView : View{
 struct PhotoView: View{
     var image: String
     var caption: String
+    var copyright: String?
     var body: some View{
         VStack(alignment: .center){
             Image(image)
@@ -58,6 +59,10 @@ struct PhotoView: View{
                 .scaledToFit()
             Text(caption)
                 .font(.caption)
+            if let copy = copyright{
+                Text(copy)
+                    .font(.caption2)
+            }
         }
         .frame(height: 200)
     }

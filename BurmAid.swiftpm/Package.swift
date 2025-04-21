@@ -16,8 +16,10 @@ let package = Package(
         .iOSApplication(
             name: "My App",
             targets: ["AppModule"],
+            bundleIdentifier: "dev.phyotp.burmaidapp",
+            teamIdentifier: "YBKKM9K8UR",
             displayVersion: "1.0",
-            bundleVersion: "1",
+            bundleVersion: "2",
             appIcon: .asset("AppIcon"),
             accentColor: .presetColor(.green),
             supportedDeviceFamilies: [
@@ -29,7 +31,8 @@ let package = Package(
                 .landscapeRight,
                 .landscapeLeft,
                 .portraitUpsideDown(.when(deviceFamilies: [.pad]))
-            ]
+            ],
+            appCategory: .education
         )
     ],
     dependencies: [

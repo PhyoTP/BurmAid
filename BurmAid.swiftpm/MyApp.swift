@@ -2,13 +2,14 @@ import SwiftUI
 
 @main
 struct MyApp: App {
+    @State var lessonManager = LessonManager()
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(UserData())
+                .environment(lessonManager)
         }
     }
 }
-class UserData: ObservableObject{
-    @AppStorage("done") var isDone = false
-}
+
+
+

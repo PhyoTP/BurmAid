@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SemiConsonantView: View{
-    @EnvironmentObject var userData: UserData
+    @Environment(LessonManager.self) var lessonManager
     var body: some View{
         NavigationStack{
             List{
@@ -30,7 +30,7 @@ struct SemiConsonantView: View{
                     Text("Semi-consonants can be combined.")
                     Text("For example, မျွ(mywa).")
                 }
-                if !userData.isDone{
+                if !lessonManager.isDone(with:"Vowels"){
                     NavigationLink("Next"){
                         QuizView(selection: 3)
                     }
@@ -43,5 +43,5 @@ struct SemiConsonantView: View{
 }
 #Preview{
     SemiConsonantView()
-        .environmentObject(UserData())
+        .environment(LessonManager())
 }

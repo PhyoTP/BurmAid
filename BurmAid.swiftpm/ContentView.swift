@@ -3,10 +3,10 @@ import SwiftUI
 struct ContentView: View {
     @State private var opacity = 0.0
     @State private var enter = false
-    @EnvironmentObject var userData: UserData
+    @Environment(LessonManager.self) var lessonManager
     @State var text = ""
     var body: some View {
-        if userData.isDone{
+        if lessonManager.isDone(with: "Vowels"){
             MenuView()
         }else{
             NavigationStack{
@@ -17,7 +17,7 @@ struct ContentView: View {
                             
                             withAnimation(.easeInOut(duration: 3), {
                                 opacity = 1
-                                text.append(contentsOf: "Welcome to BurmAid")
+                                text.append(contentsOf: lessonManager.lessons.isEmpty ? "Welcome to BurmAid" : "Welcome Back")
                             }, completion: {
                                 enter = true
                             })
@@ -25,8 +25,19 @@ struct ContentView: View {
                         .font(.system(size: 30, weight: .bold, design: .rounded))
                     if enter{
                         NavigationLink{
-                            GreetingView()
-                                .navigationBarBackButtonHidden()
+                            if lessonManager.isDone(with: "Tones"){
+                                SimpleVowelView()
+                                    .navigationBarBackButtonHidden()
+                            }else if lessonManager.isDone(with: "Semi-consonants"){
+                                TonesView()
+                                    .navigationBarBackButtonHidden()
+                            }else if lessonManager.isDone(with: "Consonants"){
+                                SemiConsonantView()
+                                    .navigationBarBackButtonHidden()
+                            }else{
+                                GreetingView()
+                                    .navigationBarBackButtonHidden()
+                            }
                         } label: {
                             HStack{
                                 Text("Enter")
@@ -46,7 +57,7 @@ struct ContentView: View {
 #Preview{
     ContentView()
         .preferredColorScheme(.light)
-        .environmentObject(UserData())
+        .environment(LessonManager())
 }
 
 

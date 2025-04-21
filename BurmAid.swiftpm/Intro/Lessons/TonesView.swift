@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct TonesView: View{
-    @EnvironmentObject var userData: UserData
+    @Environment(LessonManager.self) var lessonManager
     var body: some View{
         NavigationStack{
             List{
@@ -21,7 +21,7 @@ struct TonesView: View{
                     Text("Most of the time, it is indicated with း.")
                     Text("For example, ကား (kahh) has a long tone.")
                 }
-                if !userData.isDone{
+                if !lessonManager.isDone(with: "Vowels"){
                     NavigationLink("Next"){
                         TimelineView(progress: 4)
                     }

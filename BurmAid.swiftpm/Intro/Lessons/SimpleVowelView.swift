@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SimpleVowelView: View{
-    @EnvironmentObject var userData: UserData
+    @Environment(LessonManager.self) var lessonManager
     var body: some View{
         NavigationStack{
             List{
@@ -45,7 +45,7 @@ struct SimpleVowelView: View{
                     }
                 }
                 Text("The words in brackets are vowels by themselves.")
-                if !userData.isDone{
+                if !lessonManager.isDone(with: "Vowels"){
                     NavigationLink("Next"){
                         ConsonantVowelView()
                     }
@@ -58,5 +58,5 @@ struct SimpleVowelView: View{
 }
 #Preview{
     SimpleVowelView()
-        .environmentObject(UserData())
+        .environment(LessonManager())
 }

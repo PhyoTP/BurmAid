@@ -5,7 +5,7 @@ struct QuizView: View{
     @State private var qna = ("",[String](), [String]()) // question, answer, options
     let selection: Int
     @State private var num = 0
-    @EnvironmentObject var userData: UserData
+    @Environment(LessonManager.self) var lessonManager
     @State private var image = "normal"
     @State private var audio = ""
     @State private var audioPlayer: AVAudioPlayer?
@@ -28,13 +28,10 @@ struct QuizView: View{
             VStack{
                 Text("Pop Quiz!")
                     .bold()
-                    .padding()
                 Image(image)
                     .resizable()
                     .scaledToFit()
-                    .padding()
                 Text(qna.0)
-                    .padding()
                 if audio != "", let url = Bundle.main.url(forResource: audio, withExtension: "m4a"){
                     Button("Play", systemImage: "speaker.wave.3.fill"){
                         do{
@@ -48,26 +45,27 @@ struct QuizView: View{
                 if num == 0{
                     switch selection{
                     case 2:
-                        HStack {
-                            ForEach($qna.2, id: \.self){$answer in
-                                Button(answer){
-                                    selectedAnswer = answer
-                                    if !validateAnswer(){
-                                        answer += " "
+                            VStack {
+                                ForEach($qna.2, id: \.self){$answer in
+                                    Button(answer){
+                                        selectedAnswer = answer
+                                        if !validateAnswer(){
+                                            answer += " "
+                                        }
                                     }
+                                    .foregroundStyle(.white)
+                                    .padding()
+                                    .frame(width: 100)
+                                    .background(answer.last == " " ? .red : (answer == qna.1[0] && image == "happy" ? .green : .blue))
+                                    .mask(RoundedRectangle(cornerRadius: 10))
+                                    
+                                    
                                 }
-                                .foregroundStyle(.white)
-                                .padding()
-                                .frame(width: 150)
-                                .background(answer.last == " " ? .red : (answer == qna.1[0] && image == "happy" ? .green : .blue))
-                                .mask(RoundedRectangle(cornerRadius: 10))
-                                
                             }
-                        }
-                        .padding()
+                            .padding()
                     case 3:
-                        VStack{
-                            HStack{
+                        HStack{
+                            VStack{
                                 ForEach(Array(0..<qna.1.count), id: \.self){index in
                                     Button(qna.1[index]){
                                         if selectedAnswer == ""{
@@ -99,7 +97,7 @@ struct QuizView: View{
                                     .mask(RoundedRectangle(cornerRadius: 10))
                                 }
                             }
-                            HStack{
+                            VStack{
                                 ForEach(Array(0..<qna.2.count).shuffled(), id: \.self){index in
                                     Button(qna.2[index]){
                                         if selectedAnswer == ""{
@@ -151,7 +149,7 @@ struct QuizView: View{
                             }
                         }else{
                             NavigationLink{
-                                if userData.isDone{
+                                if lessonManager.isDone(with: "Vowels"){
                                     QuizView(selection: selection)
                                 }else{
                                     TimelineView(progress: selection)
@@ -182,7 +180,7 @@ struct QuizView: View{
                 Text("Try Again!")
             }
             .toolbar{
-                if !userData.isDone{
+                if !lessonManager.isDone(with: "Vowels"){
                     ToolbarItem(){
                         NavigationLink("Skip"){
                             TimelineView(progress: selection)
@@ -278,5 +276,5 @@ struct QuizView: View{
 }
 #Preview{
     QuizView(selection: 3)
-        .environmentObject(UserData())
+        .environment(LessonManager())
 }
